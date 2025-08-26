@@ -76,25 +76,26 @@ Texto Original:
 
 Aprofundamento:
 
-Vamos formalizar a análise de complexidade. Seja L o comprimento da palavra/prefixo que estamos buscando e N o número total de palavras na Trie.
 
-- **Busca, Inserção e Remoção em uma Trie:** A complexidade é O(L). Para cada caractere da palavra, fazemos uma única operação (geralmente, um acesso a um array ou a uma hash map). A operação nunca se compara com outras palavras. Não importa se a Trie tem 100 palavras ou 100 milhões de palavras, o tempo para encontrar "casa" é o mesmo.
+O verdadeiro poder da Trie se revela na velocidade de suas operações. Para entender por que ela é tão rápida, vamos pensar no **trabalho que o computador precisa fazer**.
 
-    Comparação:
+Imagine que você tem um dicionário gigante e quer saber se a palavra "sonhar" está nele.
 
-     - Array/Lista não ordenada: Busca é O(N×L).
-
-     - Árvore Binária de Busca Balanceada: Busca é O(L×logN), pois para cada um dos logN nós que visitamos, precisamos comparar strings, o que leva tempo L.
-
-     - Tabela Hash: Em média, é O(L), mas não oferece suporte nativo para busca por prefixo (ex: "encontre todas as palavras que começam com 'ca'").
-
-A busca por prefixo (autocomplete) funciona em duas etapas:
-
- 1. Navegar até o nó do prefixo: Isso leva tempo O(L), onde L é o
-    tamanho do prefixo.
+-   **Numa lista simples**, o computador teria que comparar "sonhar" com a primeira palavra da lista, depois com a segunda, a terceira, e assim por diante, até encontrá-la ou chegar ao fim. Se o dicionário crescer, o trabalho aumenta.
     
-  2. Explorar a sub-árvore: A partir desse nó, fazemos uma travessia (como uma Busca em Profundidade - DFS) para encontrar todos os
-    caminhos que terminam com o marcador isEndOfWord.
+-   **Em uma Trie, a abordagem é completamente diferente.** A Trie não faz comparações entre palavras. Em vez disso, ela navega por um caminho direto. O processo é como seguir uma trilha bem sinalizada:
+    
+    1.  Comece na raiz. Existe um caminho para a letra 's'? Sim.
+        
+    2.  Siga para o nó 's'. A partir daqui, existe um caminho para 'o'? Sim.
+        
+    3.  Siga para o nó 'o'. Existe um caminho para 'n'? E assim por diante.
+        
+
+O número de passos que o sistema dá é exatamente o número de letras da palavra que estamos buscando. A busca por "sonhar" leva 6 passos. O ponto crucial é que **esse número de passos não muda, não importa se o dicionário tem 100 palavras ou 100 milhões de palavras**. O tamanho total do dicionário se torna irrelevante para a velocidade de uma busca individual.
+
+É essa característica que a torna a base perfeita para sistemas que exigem respostas instantâneas, como o **autocomplete**. Quando você digita "son", a Trie navega até o nó que representa esse prefixo. A partir daquele ponto, o sistema precisa apenas explorar a pequena "sub-árvore" que se origina dali para encontrar todas as continuações possíveis ("-ho", "-har", etc.), ignorando todo o resto do universo de palavras.
+
 
 ## Slide 5: A Estrutura do Nó - children (Aprofundado)
 
